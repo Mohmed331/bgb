@@ -8,9 +8,9 @@
 
     <item
         android:id="@+id/menu_dashboard"
-        android:title="Dashboard" />
+        android:title="Dash" />
 
     <item
-        android:id="@+id/menu_login"
-        android:title="Login" />
+        android:id="@+id/menu_exit"
+        android:title="Exit" />
 </menu>

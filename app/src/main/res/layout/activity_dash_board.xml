@@ -21,13 +21,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Exit App" />
-
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            android:layout_marginTop="16dp" />
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -1,14 +1,12 @@
 package com.example.myapplication999;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,27 +18,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNav = findViewById(R.id.bottomNavigationMain);
-        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                int id = item.getItemId();
 
-                if (id == R.id.menu_home) {
-                    Toast.makeText(MainActivity.this, "Already on Home", Toast.LENGTH_SHORT).show();
-                    return true;
-                } else if (id == R.id.menu_dashboard) {
-                    Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intent);
-                    return true;
-                } else if (id == R.id.menu_login) {
-                    Intent intent = new Intent(MainActivity.this, login.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intent);
-                    return true;
-                }
-                return false;
+        // Load default fragment on start
+        loadFragment(new HomeFragment());
+
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.menu_home) {
+                return loadFragment(new HomeFragment());
+            } else if (id == R.id.menu_dashboard) {
+                return loadFragment(new DashboardFragment());
+            } else if (id == R.id.menu_exit) {
+                return loadFragment(new ExitFragment());
             }
+            return false;
         });
+    }
+
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainer, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
     }
 }
